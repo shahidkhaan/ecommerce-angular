@@ -1,0 +1,82 @@
+<app-header></app-header>
+
+
+<div>
+  <button class="btn">Shope Now</button>
+</div>
+<h1 class="heading">Chose a best phone for
+  <br> your self
+</h1>
+<p class="description">Just in professional world,sometime a phone call is definitely more meaningful than text </p>
+<app-categories></app-categories>
+
+<select id="category" (change)="onCategoryChange($event)" style="margin-left: 70px;">
+  <option value="">Categories</option>
+  <ng-container *ngFor="let allcategories of this.allCategories ">
+    <option value="{{ allcategories }}">{{ allcategories }}</option>
+  </ng-container>
+</select>
+
+
+<br><br><br>
+
+
+{{ searchText  }}
+
+
+<app-search (searchTextChanged)="onSearchTextEntered($event)"></app-search>
+
+
+
+<div style="margin-top: -20px;">
+  
+
+  <div class="slidecontainer">
+    <input type="range" min="1" max="6000000" value="$event" class="slider" id="myRange" style="width: 30%;margin-left:290px" [(ngModel)]="rangePrice" (input)="priceRange($event)">
+  </div>
+
+
+  <!-- <ng5-slider [(value)]="minValue" [(highValue)]="maxValue" [options]="options"></ng5-slider> -->
+
+</div>
+
+
+
+
+<div class="container-fluid pt-5">
+  <div class="container">
+    <div class="row">
+      <ng-container *ngFor="let row of productList">
+        <div class="col-lg-6 mb-5"
+          *ngIf="searchText === '' || row.name.toLowerCase().includes(searchText)  || row.category.toLowerCase().includes(searchText) ||   row.price < (searchText) ">
+    
+          
+          <div class="row align-items-center">
+            <div class="col-sm-5" id="">
+              <img class="img-fluid mb-3 mb-sm-0" [routerLink]="['/products-detail', row.id]"
+                (click)="productdetail(row)" src="{{  row.image }}" alt="">
+              <br>
+              <!-- <i *ngIf="!addedToWishlist" class="far fa-heart float-right"  (click)=handleRemoveFromWishlist(row.id)></i>
+                <i *ngIf="addedToWishlist" class="far fa-heart float-right" (click)=handleAddToWishlist(row.id)></i>
+    -->
+              <button class="btn btn-primary" style="color: black; " id="addcart" (click)=addtocart(row)>Add
+                Cart</button>
+            </div>
+            <div class="col-sm-7" id="listing">
+              <h4><i class=" service-icon"></i>{{ row.name }} </h4>
+          
+              <h4><i class=" service-price"></i>{{ row.price }} </h4>
+              <p class="m-0">{{ row.description.slice(0,90) }} </p>
+            </div>
+          </div>
+
+
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+
+
+<app-footer></app-footer>
